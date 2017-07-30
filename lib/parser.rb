@@ -34,7 +34,7 @@ class Parser
       puts "The valid format it's: [minute] [hour] [day of month] [month] [day of week] [command]"
       puts 'E.g. "*/15 0 1,15 * 1-5 /usr/bin/find"'
 
-      return
+      Process.exit(1)
     end
 
     # TODO: Validate each argument with RegExps
