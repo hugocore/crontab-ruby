@@ -33,8 +33,12 @@ RSpec.describe Parser do
     end
 
     context 'with an incomplete cron string' do
-      it 'returns empty' do
-        expect(Parser.call('*/15 0 1,15 * 1-5')).to be_nil
+      subject { '*/15 0 1,15 * 1-5' }
+
+      it 'raises exception' do
+        expect do
+          Parser.call(subject)
+        end.to raise_error(ArgumentError)
       end
     end
   end

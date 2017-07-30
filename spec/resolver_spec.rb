@@ -124,5 +124,15 @@ RSpec.describe Resolver do
         expect(response).to eq(expected)
       end
     end
+
+    context 'with invalid argument' do
+      subject { '* * * * 1-10 /var/bin/do-update.sh'.split(/\s/) }
+
+      it 'raises exception' do
+        expect do
+          Resolver.call(build_cron_args(*subject))
+        end.to raise_error(ArgumentError)
+      end
+    end
   end
 end
