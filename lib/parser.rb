@@ -1,7 +1,7 @@
 require_relative 'service'
 
 # Parses the input and breaks each temporal argument into an hash,
-# E.g. for this cron input "*/15 0 1,15 * 1-5 /usr/bin/find"
+# e.g. for this cron input "*/15 0 1,15 * 1-5 /usr/bin/find"
 #
 # > {
 #   min: '*/15',
