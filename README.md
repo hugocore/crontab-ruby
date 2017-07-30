@@ -1,5 +1,8 @@
 # CronTab Interpreter in Ruby
 
+This is a CLI app written in Ruby that parses a cron string and expands
+each field to show the times at which it will run.
+
 ## Install
 
 Run the following command to install dependencies:
@@ -11,7 +14,7 @@ bundler install
 
 ## Usage
 
-This is a CLI app written in Ruby. In order to run this app you must invoke `ruby`
+In order to run this app you must invoke `ruby`
 followed by the main filename and your CronTab string, e.g.:
 
 ```bash
