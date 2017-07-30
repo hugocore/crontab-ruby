@@ -1,5 +1,3 @@
-require_relative 'service'
-
 class Parser
   extend Service
 
