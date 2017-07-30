@@ -1,11 +1,12 @@
 # CronTab Interpreter in Ruby
 
 This is a CLI app written in Ruby that parses a cron string and expands
-each field to show the times at which it will run.
+each field to show the times at which it will run. You can find more
+information about CronTabs here: https://www.freebsd.org/cgi/man.cgi?crontab(5)
 
 ## Install
 
-Run the following command to install dependencies:
+Run the following commands to install dependencies:
 
 ```bash
 gem install bundler
