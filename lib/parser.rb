@@ -26,9 +26,8 @@ class Parser
   end
 
   def call
-    @cron_string.gsub!(/\s+/, ' ') # remove multiple white spaces/tabs
-
-    cron_args = @cron_string.split(/\s/)
+    # remove multiple white spaces/tabs and split arguments
+    cron_args = @cron_string.gsub(/\s+/, ' ').split(/\s/)
 
     if (cron_args.size != 6)
       puts 'ERROR: The given input does not follow the correct format.'
