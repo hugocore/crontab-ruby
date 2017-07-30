@@ -24,11 +24,11 @@ require 'pry'
 class Resolver
   extend Service
 
-  MINUTES = (0..59)
-  HOURS = (0..23)
-  DAYS = (1..31)
-  MONTHS = (1..12)
-  DAY_WEEK = (0..7)
+  MINUTES = (0..59).to_a
+  HOURS = (0..23).to_a
+  DAYS = (1..31).to_a
+  MONTHS = (1..12).to_a
+  DAY_WEEK = (0..7).to_a
 
   RANGE_REGEXP = /-/
   SELECTION_REGEXP = /,/
@@ -53,7 +53,7 @@ class Resolver
   private
 
   def resolve(options, cron_arg)
-    case cron_arg
+    cron_values = case cron_arg
       when STEPS_REGEXP
         resolve_steps(options, cron_arg)
       when RANGE_REGEXP
@@ -61,10 +61,21 @@ class Resolver
       when SELECTION_REGEXP
         resolve_selection(cron_arg)
       when ALL_REGEXP
-        options.to_a
+        options
       else
         [cron_arg.to_i]
     end
+
+    have_invalid_options = (cron_values - options).size > 0
+
+    if (have_invalid_options)
+      error = "ERROR: The argument '#{cron_arg}' it's not valid.\n" \
+              "The available options are: #{options.join(', ')}"
+
+      raise ArgumentError, error
+    end
+
+    cron_values
   end
 
   def resolve_range(cron_arg)

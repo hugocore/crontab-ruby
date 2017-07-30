@@ -30,11 +30,11 @@ class Parser
     cron_args = @cron_string.gsub(/\s+/, ' ').split(/\s/)
 
     if (cron_args.size != 6)
-      puts 'ERROR: The given input does not follow the correct format.'
-      puts "The valid format it's: [minute] [hour] [day of month] [month] [day of week] [command]"
-      puts 'E.g. "*/15 0 1,15 * 1-5 /usr/bin/find"'
+      error = "ERROR: The given input does not follow the correct format.\n" \
+              "The valid format it's: [minute] [hour] [day of month] [month] [day of week] [cmd]\n"
+              'E.g. "*/15 0 1,15 * 1-5 /usr/bin/find"'
 
-      Process.exit(1)
+      raise ArgumentError, error
     end
 
     # TODO: Validate each argument with RegExps
