@@ -3,7 +3,7 @@ require_relative '../lib/parser'
 RSpec.describe Parser do
   describe '.call' do
     it 'breaks the given cron string into an hash with each temporal variable' do
-      response = Parser.call('*/15 0 1,15 * 1-5 /usr/bin/find')
+      response = described_class.call('*/15 0 1,15 * 1-5 /usr/bin/find')
 
       expected = {
         min: '*/15',
@@ -18,7 +18,7 @@ RSpec.describe Parser do
     end
 
     it 'treats multiple spaces and tabs as one' do
-      response = Parser.call('*/15  0   1,15 *       1-5 /usr/bin/find')
+      response = described_class.call('*/15  0   1,15 *       1-5 /usr/bin/find')
 
       expected = {
         min: '*/15',
@@ -37,7 +37,7 @@ RSpec.describe Parser do
 
       it 'raises exception' do
         expect do
-          Parser.call(subject)
+          described_class.call(subject)
         end.to raise_error(ArgumentError)
       end
     end

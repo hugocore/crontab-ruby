@@ -16,7 +16,7 @@ RSpec.describe Resolver do
     it 'converts an cron argument into valid cron values' do
       input = build_cron_args('*/15', '0', '1,15', '*', '1-5', '/usr/bin/find')
 
-      response = Resolver.call(input)
+      response = described_class.call(input)
 
       expected = {
         min: [0, 15, 30, 45],
@@ -34,7 +34,7 @@ RSpec.describe Resolver do
       subject { '0 9-18 * * * /home/carl/hourly-archive.sh'.split(/\s/) }
 
       it 'returns cron values' do
-        response = Resolver.call(build_cron_args(*subject))
+        response = described_class.call(build_cron_args(*subject))
 
         expected = {
           min: [0],
@@ -53,7 +53,7 @@ RSpec.describe Resolver do
       subject { '0 9,18 * * 1 /home/wendy/script.sh'.split(/\s/) }
 
       it 'returns cron values' do
-        response = Resolver.call(build_cron_args(*subject))
+        response = described_class.call(build_cron_args(*subject))
 
         expected = {
           min: [0],
@@ -72,7 +72,7 @@ RSpec.describe Resolver do
       subject { '15 6 2 1 * /home/melissa/backup.sh'.split(/\s/) }
 
       it 'returns cron values' do
-        response = Resolver.call(build_cron_args(*subject))
+        response = described_class.call(build_cron_args(*subject))
 
         expected = {
           min: [15],
@@ -91,7 +91,7 @@ RSpec.describe Resolver do
       subject { '*/5 * * * * /var/bin/do-update.sh'.split(/\s/) }
 
       it 'returns cron values' do
-        response = Resolver.call(build_cron_args(*subject))
+        response = described_class.call(build_cron_args(*subject))
 
         expected = {
           min: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
@@ -110,7 +110,7 @@ RSpec.describe Resolver do
       subject { '0-30/5 * * * * /var/bin/do-update.sh'.split(/\s/) }
 
       it 'returns cron values' do
-        response = Resolver.call(build_cron_args(*subject))
+        response = described_class.call(build_cron_args(*subject))
 
         expected = {
           min: [0, 5, 10, 15, 20, 25, 30],
@@ -130,7 +130,7 @@ RSpec.describe Resolver do
 
       it 'raises exception' do
         expect do
-          Resolver.call(build_cron_args(*subject))
+          described_class.call(build_cron_args(*subject))
         end.to raise_error(ArgumentError)
       end
     end

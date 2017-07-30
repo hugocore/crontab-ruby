@@ -11,7 +11,7 @@ class CronTab
     @context = cron_string
   end
 
-  def parse()
+  def parse
     return unless @context
 
     @context = Parser.call(@context)
@@ -37,8 +37,8 @@ class CronTab
 end
 
 CronTab.new(cron_string)
-  .parse()
-  .resolve()
-  .report()
+       .parse
+       .resolve
+       .report
 
 Process.exit(0)

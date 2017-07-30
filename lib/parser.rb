@@ -29,9 +29,9 @@ class Parser
     # remove multiple white spaces/tabs and split arguments
     cron_args = @cron_string.gsub(/\s+/, ' ').split(/\s/)
 
-    if (cron_args.size != 6)
+    if cron_args.size != 6
       error = "ERROR: The given input does not follow the correct format.\n" \
-              "The valid format it's: [minute] [hour] [day of month] [month] [day of week] [cmd]\n"
+              "Valid format: [minute] [hour] [day of month] [month] [day of week] [cmd]\n" \
               'E.g. "*/15 0 1,15 * 1-5 /usr/bin/find"'
 
       raise ArgumentError, error

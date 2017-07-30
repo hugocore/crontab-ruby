@@ -1,4 +1,4 @@
-# CronTab Interpreter in Ruby
+# CronTab Parser in Ruby
 
 This is a CLI app written in Ruby that parses a cron string and expands
 each field to show the times at which it will run. You can find more

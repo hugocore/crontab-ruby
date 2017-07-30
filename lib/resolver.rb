@@ -1,5 +1,4 @@
 require_relative 'service'
-require 'pry'
 
 # Based on the rules from https://www.freebsd.org/cgi/man.cgi?crontab(5),
 # this class figures out the valid cron values for each temporal axis of cron args,
@@ -54,21 +53,21 @@ class Resolver
 
   def resolve(options, cron_arg)
     cron_values = case cron_arg
-      when STEPS_REGEXP
-        resolve_steps(options, cron_arg)
-      when RANGE_REGEXP
-        resolve_range(cron_arg)
-      when SELECTION_REGEXP
-        resolve_selection(cron_arg)
-      when ALL_REGEXP
-        options
-      else
-        [cron_arg.to_i]
-    end
+                  when STEPS_REGEXP
+                    resolve_steps(options, cron_arg)
+                  when RANGE_REGEXP
+                    resolve_range(cron_arg)
+                  when SELECTION_REGEXP
+                    resolve_selection(cron_arg)
+                  when ALL_REGEXP
+                    options
+                  else
+                    [cron_arg.to_i]
+                  end
 
-    have_invalid_options = (cron_values - options).size > 0
+    is_valid = (cron_values - options).empty?
 
-    if (have_invalid_options)
+    unless is_valid
       error = "ERROR: The argument '#{cron_arg}' it's not valid.\n" \
               "The available options are: #{options.join(', ')}"
 
@@ -85,7 +84,7 @@ class Resolver
   end
 
   def resolve_selection(cron_arg)
-    cron_arg.split(SELECTION_REGEXP).map { |i| i.to_i }
+    cron_arg.split(SELECTION_REGEXP).map(&:to_i)
   end
 
   def resolve_steps(options, cron_arg)
@@ -96,6 +95,6 @@ class Resolver
 
     range = range_value == '*' ? options : resolve_range(range_value)
 
-    range.select { |i| i % step_value.to_i == 0 }
+    range.select { |i| (i % step_value.to_i).zero? }
   end
 end
